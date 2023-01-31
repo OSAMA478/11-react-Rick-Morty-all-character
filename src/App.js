@@ -77,7 +77,7 @@ const App = () => {
 
 						{caracterList}
 					</div>
-					<div className="mx-auto flex gap-6 pt-10 pb-4">
+					<div className="mx-auto flex justify-center gap-6 pt-10 pb-4">
 						<button
 							onClick={() => {
 								setFetchUrl(prevUrl);
