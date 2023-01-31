@@ -9,6 +9,7 @@ const App = () => {
 	const [loadedData, setLoadedData] = useState({});
 	// const [isLoading, setIsLoading] = useState(false);
 	const [isModal, setIsModal] = useState(false);
+	const [modalData, setModalData] = useState({});
 	const [HttpError, setHttpError] = useState("");
 	const [fetchUrl, setFetchUrl] = useState(
 		"https://rickandmortyapi.com/api/character"
@@ -26,23 +27,32 @@ const App = () => {
 
 			const data = await response.json();
 			setLoadedData(data);
-			console.log(data);
 		};
 		fetchData().catch((error) => {
 			setHttpError(error.message);
 		});
 	}, [fetchUrl]);
-	console.log(loadedData);
 
 	const caractersData = loadedData?.results;
 
-	const modalData = {};
+	const showModal = (cardName) => {
+		const cardPersonData = caractersData.filter((item) => {
+			return item.name === cardName;
+		});
 
-	const showModal = () => {
-		// modalData = { ...modalData };
+		const totalNoOfEpisod = cardPersonData[0]?.episode?.length;
+		const imageUrl = cardPersonData[0]?.image;
+		setModalData({
+			name: cardPersonData[0]?.name,
+			status: cardPersonData[0]?.status,
+			gender: cardPersonData[0]?.gender,
+			image: imageUrl,
+			species: cardPersonData[0]?.species,
+			location: cardPersonData[0]?.location?.name,
+			noOfEpisods: totalNoOfEpisod,
+		});
+
 		setIsModal(true);
-
-		console.log("show modal runs");
 	};
 	const hideModal = () => {
 		setIsModal(false);
@@ -64,25 +74,29 @@ const App = () => {
 		<>
 			<Header />
 			{/* <Modal image={image} /> */}
-			<main className="flex flex-col relative  justify-start bg-slate-800 text-white lg:px-6 mt-16  h-  ">
-				{isModal && <Modal onClick={hideModal} />}
+			<main className="relative flex flex-col justify-start mt-16 text-white bg-slate-800 lg:px-6 h- ">
+				{isModal && (
+					<div id="overlay-backdrop">
+						<Modal info={modalData} onClick={hideModal} />
+					</div>
+				)}
 				{/* [calc(100vh-4rem)] */}
 				{/* {!isModal && ( */}
 				<div>
-					<div className="my-4 bg-red-500 h-16  flex  items-center">
+					<div className="flex items-center h-16 my-4 bg-red-500">
 						<SearchBar />
 					</div>
-					<div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  justify-items-center mx-auto max-w-7xl gap-8  ">
+					<div className="grid grid-cols-1 gap-8 mx-auto sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center max-w-7xl">
 						{HttpError && <p className="col-start-2">{HttpError}</p>}
 
 						{caracterList}
 					</div>
-					<div className="mx-auto flex justify-center gap-6 pt-10 pb-4">
+					<div className="flex justify-center gap-6 pt-10 pb-4 mx-auto">
 						<button
 							onClick={() => {
 								setFetchUrl(prevUrl);
 							}}
-							className="bg-slate-700 px-8 py-2 rounded-md text-lg"
+							className="px-8 py-2 text-lg rounded-md bg-slate-700"
 						>
 							Prev
 						</button>
@@ -90,7 +104,7 @@ const App = () => {
 							onClick={() => {
 								setFetchUrl(nextUrl);
 							}}
-							className="bg-slate-700 px-8 py-2 rounded-md text-lg"
+							className="px-8 py-2 text-lg rounded-md bg-slate-700"
 						>
 							Next
 						</button>

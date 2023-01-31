@@ -9,7 +9,7 @@ const CharacterCard = ({ name, gender, image, onClick }) => {
 	const isMale = gender;
 
 	const moreInfoHandler = () => {
-		onClick();
+		onClick(name);
 	};
 
 	return (
