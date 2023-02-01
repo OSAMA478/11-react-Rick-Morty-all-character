@@ -2,8 +2,13 @@ import React from "react";
 
 const Header = () => {
 	return (
-		<header className="fixed top-0 h-16 z-50 bg-slate-700 w-full text-white flex justify-start items-center p-2 lg:px-6">
-			<h1 className="capitalize text-4xl font-bold">hatch</h1>
+		<header className="fixed top-0 z-50 flex items-center justify-start w-full h-16 p-2 text-white bg-slate-700 lg:px-6">
+			{/* <h1 className="text-4xl font-bold capitalize">Rick & Morty</h1> */}
+			<img
+				src="https://www.freepnglogos.com/uploads/rick-and-morty-png/list-rick-and-morty-episodes-wikipedia-24.png"
+				alt="cartoon name"
+				className="h-full"
+			/>
 		</header>
 	);
 };
