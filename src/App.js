@@ -7,6 +7,7 @@ import SearchBar from "./components/SearchBar";
 
 const App = () => {
 	const [loadedData, setLoadedData] = useState({});
+	const [searchCards, setSearchCards] = useState([]);
 	// const [isLoading, setIsLoading] = useState(false);
 	const [isModal, setIsModal] = useState(false);
 	const [modalData, setModalData] = useState({});
@@ -70,26 +71,48 @@ const App = () => {
 		);
 	});
 
+	const searchCardHandler = (searchValue) => {
+		console.log(searchValue);
+		console.log(caractersData);
+
+		const filteredList = caractersData.filter((item) =>
+			item?.name.toLowerCase().includes(searchValue.toLowerCase())
+		);
+
+		console.log(filteredList);
+
+		setSearchCards(filteredList);
+	};
+
+	const searchCardsList = searchCards?.map((caracter, i) => {
+		return (
+			<CharacterCard
+				onClick={showModal}
+				key={i}
+				name={caracter.name}
+				gender={caracter.gender}
+				image={caracter.image}
+			/>
+		);
+	});
+
 	return (
 		<>
 			<Header />
-			{/* <Modal image={image} /> */}
-			<main className="relative flex flex-col justify-start mt-16 text-white bg-slate-800 lg:px-6 h- ">
+			<main className="relative flex flex-col justify-start min-h-[calc(100vh-4rem)] mt-16 text-white bg-slate-800 lg:px-6 ">
 				{isModal && (
 					<div id="overlay-backdrop">
 						<Modal info={modalData} onClick={hideModal} />
 					</div>
 				)}
-				{/* [calc(100vh-4rem)] */}
-				{/* {!isModal && ( */}
 				<div>
 					<div className="flex items-center h-16 my-4">
-						<SearchBar />
+						<SearchBar onClick={searchCardHandler} />
 					</div>
 					<div className="grid grid-cols-1 gap-8 mx-auto sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center max-w-7xl">
 						{HttpError && <p className="col-start-2">{HttpError}</p>}
 
-						{caracterList}
+						{searchCards.length === 0 ? caracterList : searchCardsList}
 					</div>
 					<div className="flex justify-center gap-6 pt-10 pb-4 mx-auto">
 						<button

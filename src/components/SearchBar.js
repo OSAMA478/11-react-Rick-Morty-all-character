@@ -1,11 +1,16 @@
 import React from "react";
 import { FcSearch } from "react-icons/fc";
 
-const SearchBar = () => {
+const SearchBar = ({ onClick }) => {
+	const searchHandler = (event) => {
+		console.log(event.target.value);
+		onClick(event.target.value);
+	};
 	return (
 		<div className="relative mx-auto">
 			<input
 				type="text"
+				onChange={searchHandler}
 				className="block w-64 max-w-sm p-2 pr-10 mx-auto text-black rounded-full outline-none md:w-96"
 				placeholder="search any character"
 			/>
