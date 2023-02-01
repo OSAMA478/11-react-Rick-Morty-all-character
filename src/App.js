@@ -83,7 +83,7 @@ const App = () => {
 				{/* [calc(100vh-4rem)] */}
 				{/* {!isModal && ( */}
 				<div>
-					<div className="flex items-center h-16 my-4 bg-red-500">
+					<div className="flex items-center h-16 my-4">
 						<SearchBar />
 					</div>
 					<div className="grid grid-cols-1 gap-8 mx-auto sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center max-w-7xl">
